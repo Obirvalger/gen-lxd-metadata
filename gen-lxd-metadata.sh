@@ -2,6 +2,37 @@
 
 PROG="${PROG:-${0##*/}}"
 
+show_usage()
+{
+	[ -z "$*" ] || echo "$*"
+	echo "Try \`$PROG --help' for more information." >&2
+	exit 1
+}
+
+show_help()
+{
+	cat <<EOF
+$PROG - generate lxd metadata in tar.xz format
+
+Usage: $PROG [options] <output filename>
+
+Options:
+  --architecture=ARCH                 set architecture;
+  --date=DATE | --creation-date=DATE  set creation date
+  --description=DESCRIPTION           set description;
+  --expiry-date=DATE                  set expiration date;
+  --name=NAME                         set name;
+  --os=OS                             set os;
+  --release=REALEASE                  set realease;
+  --serial=SERIAL                     set serial;
+  --variant=VARIANT                   set image variant;
+  --template-hosts                    add hosts template;
+  -V | --version                      print version;
+  -h, --help                          show this text and exit.
+EOF
+	exit
+}
+
 TEMP="$(getopt -n $PROG -o V,h -l version,help,architecture:,date:,creation_date:,description:,expiry_date:,name:,os:,release:,serial:,variant:,template-hosts -- "$@")" ||
 	show_usage
 
